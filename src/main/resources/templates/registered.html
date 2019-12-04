@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>registered</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/static/css/djs.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/static/css/login.css"/>
+    <script src="js/jquery.js"></script>
+
+    <script>
+        function registered(){
+            //传入的json串
+            var obj = { "name":document.getElementById("u").value,
+                "password":document.getElementById("p").value};
+            $.ajax({
+                url:"http://localhost:8080/testBoot/insert", //处理页面的路径
+                data:JSON.stringify(obj), //要提交的数据是一个JSON
+                type:"POST", //提交方式
+                dataType:"json", //返回数据的类型
+                contentType:'application/json',  //发送json格式的数据的请求
+                //TEXT字符串 JSON返回JSON XML返回XML
+                success:function(data){ //回调函数 ,成功时返回的数据存在形参data里
+                    //trim()方法会去掉页面中的冗余空格
+                    console.log(data.body)
+                    if(data.status=="0") {
+                        alert("注册成功")
+                        window.location.href="http://localhost:8080/web_login";
+                    }else {
+                        alert(data.msg);
+                        //window.location.href="http://localhost:8080/web_error";
+                    }
+                }
+            });
+            // 	var xmlhttp;
+            // 	var obj = { "name":document.getElementById("name").value,
+            // 	        "password":document.getElementById("password").value};
+            // xmlhttp=new XMLHttpRequest();
+            // xmlhttp.onreadystatechange=function()
+            //   {
+            //   if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            //     {
+            //     // document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+            // 	inner=xmlhttp.responseText;
+            //     }else{
+            // 	}
+            //   }
+            // xmlhttp.open("POST","http://localhost:8080/ssm/api/2100",true);
+            // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            // xmlhttp.send(JSON.stringify(obj));
+        }
+    </script>
+</head>
+<body>
+<div id="login">
+    <h1>注册</h1>
+    <form method="post">
+        <input type="text" required="required" placeholder="用户名" id="u"></input>
+        <input type="password" required="required" placeholder="密码" id="p"></input>
+        <button id="login_bt" onclick="registered()" class="but" type="button">注册</button>
+        <a href="http://localhost:8080/web_login">登录</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理系统</title>
+</head>
+<body>
+<h2>用户管理系统</h2>
+<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.4.0/jquery.js"></script>
+
+<script src="js/jquery.js"></script>
+
+<script>
+        $(function () {
+            $.ajax({
+                url: 'http://localhost:8080/testBoot/getUserList',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    //打印全部的数据
+                    console.log(data.body)
+                    if (data.status == 0) {
+                        console.log(data.msg)
+                        //data.data指的是数组，数组里是8个对象，i为数组的索引
+                        for(i in data.body) {
+                            var tr;
+                            tr='<td>'+data.body[i].id+'</td>\'+<td>'+data.body[i].name+'</td>'+'<td>'+data.body[i].password+'</td>'+'</td>'
+                            $("#table_user").append('<tr>'+tr+'</tr>')
+                        }
+                    } else {
+                        console.log("失败！")
+                    }
+                }
+            })
+        })
+</script>
+<table class="table table-bordered" id='table_user'>
+    <tr>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>密码</th>
+    </tr>
+</table>
+
+</body>
+</html>
